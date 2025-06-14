@@ -51,3 +51,8 @@ function clearChatHistory() {
   localStorage.removeItem('chatHistory');
   chatbox.innerHTML = '';
 }
+
+document.getElementById('clear-history').addEventListener('click', () => {
+  localStorage.removeItem('chatHistory');
+  chatbox.innerHTML = '';
+});
