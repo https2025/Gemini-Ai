@@ -1,26 +1,37 @@
-// chatbot.js
+const chatForm = document.getElementById('chat-form');
+const userInput = document.getElementById('user-input');
+const chatbox = document.getElementById('chatbox');
 
-const chatForm = document.getElementById('chat-form'); const userInput = document.getElementById('user-input'); const chatbox = document.getElementById('chatbox');
+chatForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const message = userInput.value.trim();
+  if (!message) return;
 
-const API_KEY = 'AIzaSyD9bCkRAb7rGuXTBUcfdg1Sl52GYv3CVN0';
+  appendMessage('user', message);
+  userInput.value = '';
 
-chatForm.addEventListener('submit', async (e) => { e.preventDefault(); const message = userInput.value.trim(); if (!message) return;
+  try {
+    const response = await fetch('/api/gemini', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
 
-appendMessage('user', message); userInput.value = '';
-
-try { const response = await fetch('/api/gemini', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ message }),
+    const data = await response.json();
+    const reply = data.reply || 'Maaf, tidak ada jawaban.';
+    appendMessage('bot', reply);
+  } catch (err) {
+    appendMessage('bot', 'Terjadi kesalahan saat menghubungi AI.');
+    console.error(err);
+  }
 });
-     
-const data = await response.json();
-const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, tidak bisa menjawab saat ini.';
-appendMessage('bot', reply);
 
-} catch (err) { appendMessage('bot', 'Terjadi kesalahan saat menghubungi AI.'); console.error(err); } });
-
-function appendMessage(sender, text) { const msg = document.createElement('div'); msg.className = sender === 'user' ? 'user-message' : 'bot-message'; msg.textContent = text; chatbox.appendChild(msg); chatbox.scrollTop = chatbox.scrollHeight; }
-
+function appendMessage(sender, text) {
+  const msg = document.createElement('div');
+  msg.className = sender === 'user' ? 'user-message' : 'bot-message';
+  msg.textContent = text;
+  chatbox.appendChild(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
