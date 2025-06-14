@@ -20,3 +20,17 @@ button[type="submit"] { padding: 10px 20px; border: none; border-radius: 0 8px 8
 
 button[type="submit"]:hover { background-color: #357ab8; }
 
+.clear-button {
+  background-color: #444;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.clear-button:hover {
+  background-color: #cc0000;
+}
