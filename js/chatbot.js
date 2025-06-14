@@ -8,8 +8,14 @@ chatForm.addEventListener('submit', async (e) => { e.preventDefault(); const mes
 
 appendMessage('user', message); userInput.value = '';
 
-try { const response = await fetch(https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}, { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ contents: [{ parts: [{ text: message }] }], }) });
-
+try { const response = await fetch('/api/gemini', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ message }),
+});
+     
 const data = await response.json();
 const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Maaf, tidak bisa menjawab saat ini.';
 appendMessage('bot', reply);
