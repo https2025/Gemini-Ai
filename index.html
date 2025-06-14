@@ -1,21 +1,25 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chatbot AI - Gemini</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Gemini AI Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chatbot-container">
-    <div class="chatbox" id="chatbox">
-      <div class="bot-message">Halo! Aku AI Gemini. Tanyakan apa saja ya!</div>
-    </div>
-    <form id="chat-form">
-      <input type="text" id="user-input" placeholder="Ketik pertanyaanmu di sini..." autocomplete="off" required />
+  <div class="chat-container">
+    <div class="chatbox" id="chatbox"></div>
+    
+    <form id="chat-form" class="chat-form">
+      <input type="text" id="user-input" placeholder="Tulis pesan..." autocomplete="off" />
       <button type="submit">Kirim</button>
-      <div style="text-align: right; margin: 0.5rem 0;">
-  <button id="clear-history" class="clear-button">🗑️ Hapus Riwayat</button>
-      </div>
     </form>
-  </div>  <script src="js/chatbot.js"></script></body>
+
+    <div class="options">
+      <button id="clear-history" class="clear-button">🗑️ Hapus Riwayat</button>
+    </div>
+  </div>
+
+  <script src="chat.js"></script>
+</body>
 </html>
