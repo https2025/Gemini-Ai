@@ -17,7 +17,7 @@ chatForm.addEventListener('submit', async (e) => {
   userInput.value = '';
 
   try {
-    const userName = 'Leon'; // atau bisa diambil dari input kalau mau dinamis
+    const userName = 'Pengguna'; // atau bisa diambil dari input kalau mau dinamis
 const memoryPrefix = `Kamu adalah AI asisten pribadi untuk ${userName}, Nama pembuat mu adalah PT GIMA HOSTING. Simpan semua info penting dari pengguna jika ada, dan gunakan untuk membalas lebih baik.`;
 
 const response = await fetch('/api/gemini', {
