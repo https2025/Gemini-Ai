@@ -17,13 +17,16 @@ chatForm.addEventListener('submit', async (e) => {
   userInput.value = '';
 
   try {
-    const response = await fetch('/api/gemini', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message }),
-    });
+    const userName = 'Leon'; // atau bisa diambil dari input kalau mau dinamis
+const memoryPrefix = `Kamu adalah AI asisten pribadi untuk ${userName}, Nama pembuat mu adalah PT GIMA HOSTING. Simpan semua info penting dari pengguna jika ada, dan gunakan untuk membalas lebih baik.`;
+
+const response = await fetch('/api/gemini', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ message: `${memoryPrefix}\n\nUser: ${message}` }),
+});
 
     const data = await response.json();
     const reply = data.reply || 'Maaf, tidak ada jawaban.';
