@@ -1,4 +1,3 @@
-// api/gemini.js
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -10,7 +9,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'No message provided' });
   }
 
-  const API_KEY = process.env.GEMINI_API_KEY; // simpan di environment variable
+  const API_KEY = process.env.GEMINI_API_KEY;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
   try {
@@ -18,15 +17,28 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: message }] }]
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: message }]
+          }
+        ]
       })
     });
 
     const data = await response.json();
+    console.log("💬 Respon Gemini:", JSON.stringify(data, null, 2));
 
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || '❌ Tidak ada respon dari AI.';
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!reply) {
+      return res.status(200).json({ response: 'Maaf, tidak ada jawaban yang bisa diberikan.' });
+    }
+
     res.status(200).json({ response: reply });
+
   } catch (err) {
+    console.error("❌ Error:", err);
     res.status(500).json({ error: 'Internal server error', detail: err.message });
   }
 }
